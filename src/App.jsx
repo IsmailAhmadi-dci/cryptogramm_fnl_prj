@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react'
+import { useState, createContext, useEffect } from 'react'
 import './App.scss'
 
 import Welcome from './components/Welcom'
@@ -19,6 +19,8 @@ function App() {
   const loadData = () => {
     setUserData(JSON.parse(localStorage.getItem('userData')))
   }
+
+ 
 
   return (
     <UserData.Provider value={[userData, setUserData, saveData, loadData]}>
