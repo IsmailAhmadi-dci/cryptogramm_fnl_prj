@@ -20,6 +20,10 @@ $bg: #f0f0f0;
 $white: #fff;
 $primary: #131313;
 $secondary: #818181;
+$light: #dbdbdb;
+$marked: #ffd931;
+$pen: #c71c1c;
+$outline: #ff8800;
 
 
 // font families: ******************************************************
@@ -31,6 +35,11 @@ $secondary: #818181;
 @font-face {
     font-family: 'news-paper';
     src: url('../fonts/Noticia/NoticiaText-Regular.ttf') format(truetype);
+}
+
+@font-face {
+    font-family: 'hand-writer';
+    src: url('../fonts/Indie_Flower/IndieFlower-Regular.ttf') format(truetype);
 }
 
 // font variables : ************************
@@ -75,7 +84,7 @@ button {
 }
 
 button:hover {
-    border-color: #646cff;
+    border-color: $outline;
 }
 
 button:focus,
@@ -85,18 +94,18 @@ button:focus-visible {
 
 .welcome {
     color: $primary;
-    border: 0.2rem solid $secondary;
-    background-color: #ffffffe3;
+    border: 0.2rem solid $accent;
+    background-color: #ffffffc9;
     background-image: url('../graphics/fingerPrint.png') ;
     background-size: cover;
-    background-blend-mode:color-dodge;
     background-repeat: no-repeat;
-    backdrop-filter: blur(0.2rem);
-    padding: 1rem;
+    backdrop-filter: blur(0.1rem);
+    padding: 1.5rem 3rem;
     border-radius: 0.4rem;
+    text-shadow: 0 0 0.5rem $white, 0 0 0.5rem $white, 0 0 0.5rem $white;
 
     p {
-        color: #000;
+        color: $accent;
     }
 }
 
@@ -110,6 +119,7 @@ input {
     font-family: 'type-writer';
     outline: 0.1rem solid $accent;
     background-color: $white;
+    font-size: 1rem;
 }
 
 input[type="submit"] {
@@ -130,17 +140,144 @@ input[type="submit"] {
     align-items: center;
 }
 
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #ffffff;
-    }
 
-    a:hover {
-        color: #747bff;
-    }
+.play-area {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../graphics/desk.jpg');
+    background-size: cover;
 
-    button {
-        background-color: #f9f9f9;
+    .main {
+
+        .paper-bg {
+            background: linear-gradient(45deg, rgb(179, 176, 164), rgb(241, 238, 230));
+            box-shadow: 0 0 1rem black;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 0.3rem;
+        }
+
+        .paper {
+            width: 80vw;
+            max-width: 40rem;
+            min-height: 10rem;
+            color: $primary;
+            padding: 2rem;
+            font-family: 'type-writer';
+            font-size: 1.5rem;
+        }
+
+        .marked {
+            background-color: $marked;
+            color: $pen;
+            font-weight: bold;
+            font-family: 'hand-writer';
+        }
     }
 }
+
+// Keyboard Component *************************************************
+
+.keyboard-component {
+    .keyboard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 1rem;
+        border: 0.1rem solid $light;
+        padding: 1rem;
+
+        .key-row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+
+    margin-bottom: 1rem;
+}
+
+.Key {
+    $key-height: 2.5rem;
+    $key-border: 0.4rem 0.2rem 0.2rem 1rem ;
+    margin: 0.1rem;
+    height: $key-height;
+    border:1px solid $primary;
+    border-radius: $key-border;
+    display: flex;
+    align-items: center;
+
+    button {
+        color: $white;
+        padding: 0.5rem;
+        height: $key-height;
+        border-radius: 0.4rem 0 0 1rem;
+        box-shadow: inset 0.1rem 0.1rem 0.2rem rgba(255, 255, 255, 0.4);
+    }
+    p {
+        background-color: $light;
+        font-family: 'news-paper';
+        font-size: 1.4rem;
+        color: $primary;
+        text-align: center;
+        min-width: 1.8rem;
+        height: $key-height;
+        border-radius: 0 0.2rem 0.2rem 0;
+        box-shadow: inset 0.1rem 0.1rem 0.4rem black;
+    }
+}
+
+.back-drop {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(0.7rem);
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.letter-selector {
+    background-color: $light;
+    border-radius: 0.4rem;
+    padding: 1rem;
+    width: 25rem;
+    div {
+        margin: 0.5rem;
+        width: 100%;
+    }
+    .letter-piece-holder {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .letter-piece {
+        color: $white;
+        margin: 0.1rem;
+        min-width: 4rem;
+        border-radius: 0.3rem;
+    }
+    .close {
+        color: $white;
+        background-color: $accent;
+        border-radius: 0.3rem;
+    }
+}
+
+// @media (prefers-color-scheme: light) {
+//     :root {
+//         color: #213547;
+//         background-color: #ffffff;
+//     }
+
+//     a:hover {
+//         color: #747bff;
+//     }
+
+//     button {
+//         background-color: #f9f9f9;
+//     }
+// }

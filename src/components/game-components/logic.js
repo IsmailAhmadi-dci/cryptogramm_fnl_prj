@@ -1,6 +1,6 @@
 import quotes from './data.js';
 
-const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+export const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
 // functions : *****************************************************
 
