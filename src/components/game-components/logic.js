@@ -59,11 +59,6 @@ class Game {
             author: encodeText(this.originalMessageObject.author, this.mixPattern)
         };
         this.gameKey = compareKeyGenerator(this.hashedMessageObject.quote + this.hashedMessageObject.author, this.mixPattern)
-        this.gameKeyTest = new RegExp(this.gameKey, 'ig');
-    }
-
-    check(str) {
-        return this.gameKeyTest.test(str)
     }
 }
 

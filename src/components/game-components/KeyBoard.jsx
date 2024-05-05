@@ -9,13 +9,18 @@ export default function KeyBoard({playerKey, setPlayerKey}) {
     const secondRow = 'asdfghjkl'
     const thirdRow = 'zxcvbnm'
 
+    const click1 = new Audio('../audio/sounds/click1.wav')
+    const click2 = new Audio('../audio/sounds/click2.wav')
+    const erase = new Audio('../audio/sounds/erase.mp3')
+
     const [focusKey, setFocusKey] = useState(0)
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
     const [letterBelt, setLetterBelt] = useState(alphabet)
 
     const handleKeyPress = (input) => {
         setFocusKey(input)
         setIsOpen(true)
+        click2.play()
     }
 
     const placeLetter = (input) => {
@@ -23,23 +28,42 @@ export default function KeyBoard({playerKey, setPlayerKey}) {
         let belt = letterBelt.split('')
 
         temp[focusKey] = input;
-        belt[alphabet.indexOf(input)] = '.';
-
         setPlayerKey(temp.join(''))
+
+        for (let i = 0 ; i < alphabet.length; i++) {
+            if (temp.indexOf(alphabet[i]) === -1) {
+                belt[i] = alphabet[i]
+            } else {
+                belt[i] = '.'
+            }
+        }
+        
         setLetterBelt(belt.join(''))
         setIsOpen(false)
+
+        click1.play()
     }
 
     const clearLetter = () => {
         let temp = playerKey.split('')
         let belt = letterBelt.split('')
 
-        belt[focusKey] = alphabet[focusKey];
-        temp[focusKey] = '.';
+        // belt[focusKey] = alphabet[focusKey];
 
+        temp[focusKey] = '.';
         setPlayerKey(temp.join(''))
+
+        for (let i = 0 ; i < alphabet.length; i++) {
+            if (temp.indexOf(alphabet[i]) === -1) {
+                belt[i] = alphabet[i]
+            } else {
+                belt[i] = '.'
+            }
+        }
+
         setLetterBelt(belt.join(''))
         setIsOpen(false)
+        erase.play()
     }
 
     return (
@@ -58,13 +82,13 @@ export default function KeyBoard({playerKey, setPlayerKey}) {
             <div className="back-drop" style={{display: isOpen ? 'flex' : 'none'}}>
                 <div className="letter-selector">
                     <div style={{textAlign: "right"}}>
-                        <button className="close" onClick={() => setIsOpen(false)}>Close X</button>
+                        <button className="close" onClick={() => {setIsOpen(false) ; click2.play()}} title="Closing this dialogue box">Close X</button>
                     </div>
                     <div className="letter-piece-holder">
                         {letterBelt.split('').filter(item => item !== '.').map(item => <button className="letter-piece" onClick={() => placeLetter(`${item}`)}>{item.toUpperCase()}</button>)}
                     </div>
                     <div style={{textAlign: "center"}}>
-                        <button className="letter-piece" onClick={clearLetter}>Clear</button>
+                        <button className="letter-piece" onClick={clearLetter} title={`Will clear the value for letter "${alphabet[focusKey].toUpperCase()}"`}>Clear</button>
                     </div>
                 </div>
             </div>

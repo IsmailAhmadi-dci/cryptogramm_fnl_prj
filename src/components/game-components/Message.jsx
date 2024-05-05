@@ -10,7 +10,7 @@ export default function Message({quote, author, playerKey, isVisible}) {
 
 
     return (
-        <div style={{display: isVisible ? 'block' : 'none'}}>
+        <div style={{display: isVisible ? 'block' : 'none'}} className="message">
             <p>
                 {quote.split('').map(item => {
 
@@ -24,7 +24,7 @@ export default function Message({quote, author, playerKey, isVisible}) {
                 })}
             </p>
 
-            <br/><br/>
+            <br/>
 
             <p>
                 {author.split('').map(item => {

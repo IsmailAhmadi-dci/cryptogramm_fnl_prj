@@ -1,6 +1,8 @@
 import { UserData } from "../App"
 import { useContext, useState } from "react"
 
+import { endedGame } from "./PlayArea"
+
 
 export default function Welcome() {
 
@@ -9,7 +11,7 @@ export default function Welcome() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        setUserData(prev => ({...prev, playerName: playerName}))
+        setUserData({playerName: playerName, currentGame: endedGame, records: []})
     }
 
 
