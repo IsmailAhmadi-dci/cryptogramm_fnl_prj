@@ -11,6 +11,7 @@ export const UserData = createContext()
 function App() {
 
   const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('userData')))
+  const [openModal, setOpenModal] = useState(false)
 
   const saveData = () => {
     localStorage.setItem('userData', JSON.stringify(userData))
@@ -23,7 +24,7 @@ function App() {
  
 
   return (
-    <UserData.Provider value={[userData, setUserData, saveData, loadData]}>
+    <UserData.Provider value={[userData, setUserData, saveData, loadData, openModal, setOpenModal]}>
       {userData ? <PlayArea /> : <Welcome />}
     </UserData.Provider>
   )

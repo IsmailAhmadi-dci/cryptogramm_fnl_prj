@@ -1,8 +1,9 @@
+// Main Packages: ************************************************
 import { UserData } from "../App"
 import { useContext, useEffect, useReducer, useState } from "react"
 import Game from "./game-components/logic"
 
-
+// Components: **************************************************
 import Message from "./game-components/Message"
 import KeyBoard from "./game-components/KeyBoard"
 import GameControl from "./game-components/GameControl"
@@ -11,6 +12,14 @@ import Pause from "./game-components/Pause"
 import NewGameSuggestion from "./game-components/NewGame"
 import Footer from "./game-components/Footer"
 
+
+// Modal contents : ***************************************
+import Help from "./modal-contents/Help"
+import AboutMe from "./modal-contents/AboutMe"
+import Statistics from "./modal-contents/Statistics"
+import ChangeName from "./modal-contents/ChangeName"
+
+// template for a default or an ended Game: **************
 export const endedGame = {
     isEnded: true,
     isRunning: false,
@@ -24,9 +33,9 @@ export const endedGame = {
 
 export default function PlayArea() {
 
-    const [userData, setUserData, saveData, loadData] = useContext(UserData)
+    const [userData, setUserData, saveData, loadData, openModal, setOpenModal] = useContext(UserData)
     const [playerKey, setPlayerKey] = useState('..........................')
-    const [onGoingGame , setOnGoingGame] = useState(userData.currentGame ? userData.currentGame : null)
+    const [openMenu, setOpenMenu] = useState(false)
 
     const click3 = new Audio('../audio/sounds/click3.wav')
 
@@ -111,13 +120,34 @@ export default function PlayArea() {
             return () => clearInterval(intervalId); // Cleanup function to clear the interval when the component unmounts
         }
     }, [userData.currentGame.isRunning]); // Trigger the effect when the isRunning property of currentGame changes
-    
 
+    const [page, setPage] = useState(null)
+    
+    const handleModal = (content) => {
+        switch (content) {
+            case 'help':
+                setPage(Help)
+                break
+            case 'aboutme':
+                setPage(AboutMe)
+                break
+            case 'statistics':
+                setPage(Statistics)
+                break
+            case 'changename':
+                setPage(ChangeName)
+                break
+            default:
+                break
+        }
+        setOpenModal(true)
+        setOpenMenu(false)
+    }
 
     return (
         <>
-            <Header userData={userData} />
-            <div className="play-area">
+            <Header userData={userData} handleModal={handleModal} openMenu={openMenu} setOpenMenu={setOpenMenu}/>
+            <div className="play-area" title="This paper is your today's assignment">
                 <div className="main">
                     <KeyBoard playerKey={playerKey} setPlayerKey={setPlayerKey}/>
                     <div className="paper-bg paper">
@@ -128,6 +158,16 @@ export default function PlayArea() {
                     
                     </div>
                     <GameControl gameAction={gameAction}/>
+                </div>
+                <div className="back-drop" style={{display: openModal ? 'flex' : 'none'}}>
+                    <div className="modal-content">
+                        <div style={{textAlign: "right"}}>
+                            <button className="close" onClick={() => setOpenModal(false)} title="to close this content and returning back">Close</button>
+                        </div>
+                        <div>
+                            {page}
+                        </div>
+                    </div>
                 </div>
                 <Footer />
             </div>

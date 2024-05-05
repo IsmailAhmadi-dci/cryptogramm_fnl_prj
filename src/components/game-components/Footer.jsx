@@ -15,8 +15,8 @@ export default function Footer() {
         const days = now.getDate()
         const wDay = now.getDay()
 
-        const hours = now.getHours().toString().padStart(2, '0')
-        const minutes = now.getMinutes().toString().padStart(2, '0')
+        const hours = now.getHours().toString().padStart(2,'0')
+        const minutes = now.getMinutes().toString().padStart(2,'0')
 
         setCalendar({year, months, days, wDay, hours, minutes})
     }
@@ -31,10 +31,10 @@ export default function Footer() {
 
     return (
         <footer>
-            <div>
+            <div title="Current Date">
                 {weekDays[calendar.wDay]}, {calendar.days} {monthsOfYear[calendar.months]} {calendar.year}
             </div>
-            <div>
+            <div title="Current time (Your local time)">
                 {calendar.hours}:{calendar.minutes}
             </div>
         </footer>

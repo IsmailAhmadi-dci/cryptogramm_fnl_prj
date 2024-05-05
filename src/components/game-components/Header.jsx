@@ -1,8 +1,7 @@
-import { useState } from "react"
+export default function Header({userData, handleModal , openMenu, setOpenMenu}) {
 
-export default function Header({userData}) {
+    
 
-    const [openMenu, setOpenMenu] = useState(false)
     const click3 = new Audio('../audio/sounds/click3.wav')
     const handleMenu = () => {
         click3.play()
@@ -11,16 +10,15 @@ export default function Header({userData}) {
 
     return (
         <nav>
-            <div className="name-container">{userData.playerName}</div>
-            <button className="menu" onClick={handleMenu}>
+            <div className="name-container" title="This is your Name on your desk">{userData.playerName}</div>
+            <button className="menu" onClick={handleMenu} title="Open Menu to see its containing options!">
                 MENU &Xi;
             </button>
             <div className="menu-content" style={{display: openMenu ? 'flex' : 'none'}}>
-                <button>Help</button>
-                <button>About Me</button>
-                <button>Statistics</button>
-                <button>Reset All</button>
-                <button>Change Name</button>
+                <button onClick={() => handleModal('help')}>Help ...</button>
+                <button onClick={() => handleModal('aboutme')}>About Me ...</button>
+                <button onClick={() => handleModal('statistics')}>Statistics ...</button>
+                <button onClick={() => handleModal('changename')}>Change Name ...</button>
             </div>
         </nav>
     )
