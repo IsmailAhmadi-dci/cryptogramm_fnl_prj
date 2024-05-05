@@ -34,7 +34,7 @@ export default function GameControl({gameAction}) {
                     !userData.currentGame.isEnded ? gameAction('resign') : gameAction('new')
                 }}>{!userData.currentGame.isEnded ? 'Resign' : 'New Game'}</button>
             </div>
-            <h2>{timeShower(userData.currentGame.gameTime)}</h2>
+            <h2>{timeShower(userData.currentGame.gameTime).slice(0,timeShower(userData.currentGame.gameTime).length - 2)} <span className={userData.currentGame.isRunning ? 'pulsar' : ''}>{timeShower(userData.currentGame.gameTime).slice(timeShower(userData.currentGame.gameTime).length -2)}</span></h2>
         </div>
     )
 }

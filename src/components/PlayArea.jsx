@@ -9,6 +9,7 @@ import GameControl from "./game-components/GameControl"
 import Header from "./game-components/Header"
 import Pause from "./game-components/Pause"
 import NewGameSuggestion from "./game-components/NewGame"
+import Footer from "./game-components/Footer"
 
 export const endedGame = {
     isEnded: true,
@@ -128,6 +129,7 @@ export default function PlayArea() {
                     </div>
                     <GameControl gameAction={gameAction}/>
                 </div>
+                <Footer />
             </div>
         </>
     )

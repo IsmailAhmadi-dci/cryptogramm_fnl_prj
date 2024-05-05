@@ -372,6 +372,7 @@ nav {
     width: 85vw;
     max-width: 42rem;
     margin: 1rem auto;
+    margin-bottom: 6rem;
     background-color: rgba(0, 0, 0, 0.5);
     border: 0.1rem solid $light;
     border-radius: 1rem;
@@ -387,7 +388,42 @@ nav {
         border: 0.1rem solid $light;
         margin: 0.2rem;
     }
+
+    h2 {
+        margin-right: 1.5rem;
+    }
 }
+
+footer {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(0.1rem);
+    box-shadow: 0 -01rem 1rem rgba(0, 0, 0, 0.8);
+
+    div {
+        margin: 0 2rem;
+    }
+}
+
+// animations: ************************************************
+
+@keyframes pulse {
+    0% { opacity: 0;}
+    35% { opacity: 1;}
+    65% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.pulsar {
+    animation: pulse 1s infinite;
+}
+
+// Media: ************************************************
 
 @media screen and (max-width: 375px){
     
