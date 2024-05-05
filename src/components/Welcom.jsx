@@ -9,14 +9,19 @@ export default function Welcome() {
     const [userData, setUserData] = useContext(UserData)
     const [playerName, setPlayerName] = useState('')
 
+    const click3 = new Audio('../audio/sounds/click3.wav')
+    const kick = new Audio('../audio/sounds/k.wav')
+
     const handleSubmit = (e) => {
         e.preventDefault()
         setUserData({playerName: playerName, currentGame: endedGame, records: []})
+        click3.play()
     }
 
 
     const handleChange = (e) => {
         setPlayerName(e.target.value)
+        kick.play()
     }
 
 

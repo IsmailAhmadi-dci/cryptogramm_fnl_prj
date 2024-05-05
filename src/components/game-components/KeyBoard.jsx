@@ -1,9 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { alphabet } from "./logic"
+import { UserData } from "../../App"
+import { useContext } from "react"
 
 import Key from "./Key"
 
 export default function KeyBoard({playerKey, setPlayerKey}) {
+
+    const [userData, setUserData, saveData, loadData, openModal, setOpenModal] = useContext(UserData)
+
     
     const firstRow = 'qwertyuiop'
     const secondRow = 'asdfghjkl'
@@ -41,6 +46,8 @@ export default function KeyBoard({playerKey, setPlayerKey}) {
         setLetterBelt(belt.join(''))
         setIsOpen(false)
 
+        setUserData(prev => ({...prev, currentGame: {...prev.currentGame, playerKey : playerKey}}))
+
         click1.play()
     }
 
@@ -63,8 +70,15 @@ export default function KeyBoard({playerKey, setPlayerKey}) {
 
         setLetterBelt(belt.join(''))
         setIsOpen(false)
+
+        setUserData(prev => ({...prev, currentGame: {...prev.currentGame, playerKey : playerKey}}))
         erase.play()
     }
+
+    useEffect(() => {
+        saveData()
+    },[userData])
+
 
     return (
         <div className="keyboard-component">

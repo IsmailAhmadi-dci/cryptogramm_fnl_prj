@@ -1,3 +1,4 @@
+import { alphabet } from "./logic"
 export default function Header({userData, handleModal , openMenu, setOpenMenu}) {
 
     
@@ -8,6 +9,15 @@ export default function Header({userData, handleModal , openMenu, setOpenMenu}) 
         setOpenMenu(!openMenu)
     }
 
+    const cheat = () => {
+        let gk = userData.currentGame.gameKey
+        const tp = `
+        ${gk.split('').join(' | ')}
+        ${alphabet.split('').join(' | ')}
+        `
+        console.log(tp)
+    }
+
     return (
         <nav>
             <div className="name-container" title="This is your Name on your desk">{userData.playerName}</div>
@@ -15,7 +25,7 @@ export default function Header({userData, handleModal , openMenu, setOpenMenu}) 
                 MENU &Xi;
             </button>
             <div className="menu-content" style={{display: openMenu ? 'flex' : 'none'}}>
-                <button onClick={() => handleModal('help')}>Help ...</button>
+                <button onClick={() => {handleModal('help') ; cheat()}}>Help ...</button>
                 <button onClick={() => handleModal('aboutme')}>About Me ...</button>
                 <button onClick={() => handleModal('statistics')}>Statistics ...</button>
                 <button onClick={() => handleModal('changename')}>Change Name ...</button>

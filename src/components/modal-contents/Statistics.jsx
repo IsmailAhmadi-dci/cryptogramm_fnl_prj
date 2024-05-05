@@ -16,10 +16,13 @@ const dateCalc = (start, end) => {
 export default function Statistics() {
 
     const [userData, setUserData, saveData, loadData, openModal, setOpenModal] = useContext(UserData)
+    const erase = new Audio('../audio/sounds/erase.mp3')
 
     const handleClear = () => {
         setUserData(prev => ({...prev, records : []}))
         setOpenModal(false)
+        erase.play()
+
     }
 
     return (

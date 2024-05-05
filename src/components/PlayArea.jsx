@@ -11,6 +11,7 @@ import Header from "./game-components/Header"
 import Pause from "./game-components/Pause"
 import NewGameSuggestion from "./game-components/NewGame"
 import Footer from "./game-components/Footer"
+import Won from "./game-components/Won"
 
 
 // Modal contents : ***************************************
@@ -28,14 +29,16 @@ export const endedGame = {
     mixPattern : false,
     gameKey: false,
     gameTime: 0 ,
-    playerKey: ''
+    playerKey: '..........................'
 }
 
 export default function PlayArea() {
 
     const [userData, setUserData, saveData, loadData, openModal, setOpenModal] = useContext(UserData)
-    const [playerKey, setPlayerKey] = useState('..........................')
+    const [playerKey, setPlayerKey] = useState(JSON.parse(localStorage.getItem('userData')).currentGame.playerKey)
     const [openMenu, setOpenMenu] = useState(false)
+    const [wonGame, setWonGame] = useState(false)
+    const [re, setRe] = useState(new RegExp(userData.currentGame.gameKey, 'ig'))
 
     const click3 = new Audio('../audio/sounds/click3.wav')
 
@@ -52,9 +55,13 @@ export default function PlayArea() {
                     mixPattern : newGame.mixPattern,
                     gameKey: newGame.gameKey,
                     gameTime: 0 ,
-                    playerKey: playerKey
+                    playerKey: '..........................'
                 }
+
+                setRe(new RegExp(temp.gameKey, 'ig'))
+                setPlayerKey('..........................')
                 setUserData(prev => ({...prev, currentGame: temp}))
+                setWonGame(false)
             break;
             case 'resign' :
                 const record = {
@@ -68,6 +75,7 @@ export default function PlayArea() {
                 copyRecords.push(record)
 
                 setUserData(prev => ({...prev, currentGame: endedGame, records : copyRecords}))
+                setWonGame(false)
             break;
             case 'success' :
                 const successRecord = {
@@ -81,6 +89,7 @@ export default function PlayArea() {
                 suRecords.push(successRecord)
 
                 setUserData(prev => ({...prev, currentGame: endedGame, records : suRecords}))
+                setWonGame(true)
             break
             case 'play' :
                 setUserData(prev => ({...prev, currentGame: {...prev.currentGame, isRunning: true}}))
@@ -90,6 +99,18 @@ export default function PlayArea() {
             break
         }
         click3.play()
+    }
+
+    const winn = new Audio('../audio/sounds/win.mp3')
+    const stamp = new Audio('../audio/sounds/stamp.mp3')
+
+
+    const testGame = () => {
+        if (re.test(playerKey)) {
+            gameAction('success')
+            stamp.play()
+            winn.play()
+        }
     }
 
 
@@ -103,7 +124,7 @@ export default function PlayArea() {
 
     useEffect(() => {
         saveData()
-    },[userData])
+    },[userData,])
 
     useEffect(() => {
         if (userData.currentGame.isRunning) {
@@ -115,6 +136,7 @@ export default function PlayArea() {
                         gameTime: prev.currentGame.gameTime + 1
                     }
                 }));
+                testGame();
             }, 1000);
     
             return () => clearInterval(intervalId); // Cleanup function to clear the interval when the component unmounts
@@ -142,6 +164,7 @@ export default function PlayArea() {
         }
         setOpenModal(true)
         setOpenMenu(false)
+        click3.play()
     }
 
     return (
@@ -152,17 +175,17 @@ export default function PlayArea() {
                     <KeyBoard playerKey={playerKey} setPlayerKey={setPlayerKey}/>
                     <div className="paper-bg paper">
                         <p className="watermark">TOP SECRET</p>
-                        <Message  quote={userData.currentGame !== null ? userData.currentGame.hashMessageObject.quote : ' '} author={userData.currentGame !== null ? userData.currentGame.hashMessageObject.author : ' '} playerKey={playerKey} isVisible={!userData.currentGame.isEnded && userData.currentGame.isRunning}/>
+                        <Message  quote={userData.currentGame.hashMessageObject.quote ? userData.currentGame.hashMessageObject.quote : ' '} author={userData.currentGame.hashMessageObject.author ? userData.currentGame.hashMessageObject.author : ' '} playerKey={playerKey} isVisible={!userData.currentGame.isEnded && userData.currentGame.isRunning}/>
                         <Pause isVisible={!userData.currentGame.isEnded && !userData.currentGame.isRunning}/>
                         <NewGameSuggestion isVisible={userData.currentGame.isEnded}/>
-                    
+                        <Won  quote={userData.currentGame.hashMessageObject.quote ? userData.currentGame.hashMessageObject.quote : ' '} author={userData.currentGame.hashMessageObject.author ? userData.currentGame.hashMessageObject.author : ' '} playerKey={playerKey} isVisible={wonGame}/>
                     </div>
                     <GameControl gameAction={gameAction}/>
                 </div>
                 <div className="back-drop" style={{display: openModal ? 'flex' : 'none'}}>
                     <div className="modal-content">
                         <div style={{textAlign: "right"}}>
-                            <button className="close" onClick={() => setOpenModal(false)} title="to close this content and returning back">Close</button>
+                            <button className="close" onClick={() => {setOpenModal(false); click3.play()}} title="to close this content and returning back">Close</button>
                         </div>
                         <div>
                             {page}
