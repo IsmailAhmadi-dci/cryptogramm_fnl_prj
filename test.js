@@ -1,15 +1,23 @@
-const retext = 'a.e';
-const text = 'acE';
+const n = 94541;
 
-const al = 'abcdefghijklmnopqrstuvwxyz';
+const timeShower = (n) => {
+    const days = (n - (n % 86400)) / 86400;
+    n = n % 86400;
+    const hours = (n - (n % 3600)) / 3600;
+    n = n % 3600;
+    const minuts = (n - (n % 60)) / 60;
+    n = n % 60;
+    const seconds = n;
 
-const re = new RegExp(retext, 'ig');
+    let str = '';
 
-const arr = [];
+    if (days > 0) {
+        str = days.toString().padStart(2, '0') + ':' + hours.toString().padStart(2, '0') + ':' + minuts.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+    } else {
+        str = hours.toString().padStart(2, '0') + ':' + minuts.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+    }
 
-for (let i = 0; i < 26 ; i++) arr.push('.');
+    return str;
+}
 
-const newStr = arr.join('');
-
-
-console.log(newStr);
+console.log(timeShower(n));
