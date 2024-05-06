@@ -10,12 +10,19 @@ export default function Header({userData, handleModal , openMenu, setOpenMenu}) 
     }
 
     const cheat = () => {
-        let gk = userData.currentGame.gameKey
-        const tp = `
-        ${gk.split('').join(' | ')}
-        ${alphabet.split('').join(' | ')}
+        try {
+            let gk = userData.currentGame.gameKey
+            let pk = userData.currentGame.playerKey
+const tp = `
+${gk.split('').join('|')}
+${alphabet.split('').join('|')}
+${pk.split('').join('|')}
         `
         console.log(tp)
+        } catch (error) {
+            console.log('You have not an active game')
+        }
+
     }
 
     return (

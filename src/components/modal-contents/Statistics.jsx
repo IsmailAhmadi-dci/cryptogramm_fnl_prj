@@ -17,12 +17,19 @@ export default function Statistics() {
 
     const [userData, setUserData, saveData, loadData, openModal, setOpenModal] = useContext(UserData)
     const erase = new Audio('../audio/sounds/erase.mp3')
+    const rd = structuredClone(userData.records.sort((a, b) => {
+        const adate = new Date(a.start)
+        const bdate = new Date(b.start)
+
+        return bdate - adate
+    }))
+    console.log(rd)
+    console.log(userData.records)
 
     const handleClear = () => {
         setUserData(prev => ({...prev, records : []}))
         setOpenModal(false)
         erase.play()
-
     }
 
     return (
@@ -30,14 +37,18 @@ export default function Statistics() {
             <h2>Statistics</h2>
             <p>Here is your Game Statistics:</p>
             <table className="stat">
-                <tr>
-                    <th>Player</th> <th>Start</th> <th>End</th> <th>Time</th> <th>Result</th>
-                </tr>
-                {userData.records.map(item => (
+                <thead>
                     <tr>
-                        <td>{item.playerName}</td> <td>{dateFormater(item.start)}</td> <td>{dateFormater(item.end)}</td> <td>{timeShower(dateCalc(item.start, item.end))}</td> <td className={item.result === 'resigned' ? 'red' : 'green'}>{item.result}</td>
+                        <th>Player</th> <th>Start</th> <th>End</th> <th>Time</th> <th>Result</th>
                     </tr>
-                ))}
+                </thead>
+                <tbody>
+                    {rd.map(item => (
+                        <tr key={`ad${item.start}`}>
+                            <td>{item.playerName}</td> <td>{dateFormater(item.start)}</td> <td>{dateFormater(item.end)}</td> <td>{timeShower(dateCalc(item.start, item.end))}</td> <td className={item.result === 'resigned' ? 'red' : 'green'}>{item.result}</td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
             <p><b>Note:</b> in order to clear your history of playing, press this button &rarr; <button className="close" onClick={handleClear} style={{padding: "0.3rem", fontSize: "0.8rem"}}>Clear History</button> , But you must be sure because there is no undo for it!</p>
         </div>

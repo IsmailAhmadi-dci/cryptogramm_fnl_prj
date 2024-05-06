@@ -24,7 +24,7 @@ export default function Footer() {
     useEffect(() => {
         const calendarInterval = setInterval(() => {
             updateClock()
-        },1000)
+        },3000)
 
         return () => clearInterval(calendarInterval)
     }, [calendar])
