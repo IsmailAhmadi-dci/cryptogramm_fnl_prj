@@ -124,7 +124,7 @@ export default function PlayArea() {
 
     useEffect(() => {
         saveData()
-    },[userData,])
+    },[userData])
 
     useEffect(() => {
         if (userData.currentGame.isRunning) {

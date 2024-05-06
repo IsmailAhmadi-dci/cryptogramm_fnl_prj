@@ -46,7 +46,7 @@ export default function KeyBoard({playerKey, setPlayerKey}) {
         setLetterBelt(belt.join(''))
         setIsOpen(false)
 
-        setUserData(prev => ({...prev, currentGame: {...prev.currentGame, playerKey : playerKey}}))
+        setUserData(prev => ({...prev, currentGame: {...prev.currentGame, playerKey : temp.join('')}}))
 
         click1.play()
     }

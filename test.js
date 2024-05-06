@@ -20,4 +20,4 @@ const timeShower = (n) => {
     return str;
 }
 
-console.log(timeShower(n));
+const t = {playerKey:"a..c.de...........b......."}
