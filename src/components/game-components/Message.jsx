@@ -16,8 +16,8 @@ export default function Message({quote, author, playerKey, isVisible}) {
 
                     const letterIndex = alphabet.indexOf(item)
 
-                    if (letterIndex !== -1 && playerKey[letterIndex] !== '.') {
-                        return <span className={playerKey[letterIndex] ? 'marked' : ''}>{playerKey[letterIndex] ? playerKey[letterIndex].toUpperCase() : item}</span>
+                    if (letterIndex !== -1 && playerKey.indexOf(item) !== -1) {
+                        return <span className="marked">{alphabet[playerKey.indexOf(item)]}</span>
                     } else {
                         return <span>{item}</span>
                     }
@@ -31,8 +31,8 @@ export default function Message({quote, author, playerKey, isVisible}) {
 
                     const letterIndex = alphabet.indexOf(item)
 
-                    if (letterIndex !== -1 && playerKey[letterIndex] !== '.') {
-                        return <span className={playerKey[letterIndex] ? 'marked' : ''}>{playerKey[letterIndex] ? playerKey[letterIndex].toUpperCase() : item}</span>
+                    if (letterIndex !== -1 && playerKey.indexOf(item) !== -1) {
+                        return <span className="marked">{alphabet[playerKey.indexOf(item)]}</span>
                     } else {
                         return <span>{item}</span>
                     }

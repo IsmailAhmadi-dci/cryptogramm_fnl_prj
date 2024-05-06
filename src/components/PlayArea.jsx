@@ -88,7 +88,7 @@ export default function PlayArea() {
                 const suRecords = structuredClone(userData.records)
                 suRecords.push(successRecord)
 
-                setUserData(prev => ({...prev, currentGame: endedGame, records : suRecords}))
+                setUserData(prev => ({...prev, currentGame: {...prev.currentGame, isEnded: true, isRunning: false}, records : suRecords}))
                 setWonGame(true)
             break
             case 'play' :
@@ -124,6 +124,7 @@ export default function PlayArea() {
 
     useEffect(() => {
         saveData()
+        testGame()
     },[userData])
 
     useEffect(() => {
@@ -136,7 +137,6 @@ export default function PlayArea() {
                         gameTime: prev.currentGame.gameTime + 1
                     }
                 }));
-                testGame();
             }, 1000);
     
             return () => clearInterval(intervalId); // Cleanup function to clear the interval when the component unmounts
@@ -177,7 +177,7 @@ export default function PlayArea() {
                         <p className="watermark">TOP SECRET</p>
                         <Message  quote={userData.currentGame.hashMessageObject.quote ? userData.currentGame.hashMessageObject.quote : ' '} author={userData.currentGame.hashMessageObject.author ? userData.currentGame.hashMessageObject.author : ' '} playerKey={playerKey} isVisible={!userData.currentGame.isEnded && userData.currentGame.isRunning}/>
                         <Pause isVisible={!userData.currentGame.isEnded && !userData.currentGame.isRunning}/>
-                        <NewGameSuggestion isVisible={userData.currentGame.isEnded}/>
+                        <NewGameSuggestion isVisible={!wonGame && userData.currentGame.isEnded}/>
                         <Won  quote={userData.currentGame.hashMessageObject.quote ? userData.currentGame.hashMessageObject.quote : ' '} author={userData.currentGame.hashMessageObject.author ? userData.currentGame.hashMessageObject.author : ' '} playerKey={playerKey} isVisible={wonGame}/>
                     </div>
                     <GameControl gameAction={gameAction}/>

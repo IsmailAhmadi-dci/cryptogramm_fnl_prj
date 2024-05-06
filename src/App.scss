@@ -22,7 +22,7 @@ $primary: #131313;
 $secondary: #818181;
 $light: #dbdbdb;
 $marked: #ffd931;
-$pen: #c71c1c;
+$pen: #001dbe;
 $outline: #ff8800;
 $green: #047700;
 
@@ -220,6 +220,17 @@ input[type="submit"] {
         z-index: 10;
         font-size: 3rem;
     }
+}
+
+.serious {
+    font-family: $default-font !important;
+    font-weight: bold;
+}
+
+
+
+.text-center {
+    text-align: center;
 }
 // Header Component ***************************************************
 
@@ -487,6 +498,26 @@ q {
     opacity: 0.8;
 }
 
+.marked-light {
+    background: url('../graphics/brushed.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #001dbe;
+    min-height: 18rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: -4rem -8rem;
+    padding: 0.1rem 9rem;
+    q {
+        width: 80%;
+        font-size: 1.6rem;
+        font-family: 'hand-writer';
+    }
+}
+
 // animations: ************************************************
 
 @keyframes pulse {
@@ -502,6 +533,17 @@ q {
 
 // Media: ************************************************
 
-@media screen and (max-width: 375px){
-    
+@media screen and (max-width: 500px){
+    .marked-light {
+        background: url('../graphics/brushed.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: -4rem ;
+        padding: 1rem 5rem;
+        q {
+            font-family: 'hand-writer';
+            font-size: 1rem;
+        }
+    }
 }
