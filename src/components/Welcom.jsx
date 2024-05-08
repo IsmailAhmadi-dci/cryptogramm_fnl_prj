@@ -6,7 +6,7 @@ import { endedGame } from "./PlayArea"
 
 export default function Welcome() {
 
-    const [userData, setUserData] = useContext(UserData)
+    const [userData, setUserData, saveData, loadData] = useContext(UserData)
     const [playerName, setPlayerName] = useState('')
 
     const click3 = new Audio('../audio/sounds/click3.wav')
@@ -15,6 +15,7 @@ export default function Welcome() {
     const handleSubmit = (e) => {
         e.preventDefault()
         setUserData({playerName: playerName, currentGame: endedGame, records: []})
+        saveData()
         click3.play()
     }
 

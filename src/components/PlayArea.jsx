@@ -35,7 +35,7 @@ export const endedGame = {
 export default function PlayArea() {
 
     const [userData, setUserData, saveData, loadData, openModal, setOpenModal] = useContext(UserData)
-    const [playerKey, setPlayerKey] = useState(JSON.parse(localStorage.getItem('userData')).currentGame.playerKey)
+    const [playerKey, setPlayerKey] = useState(userData.currentGame.playerKey)
     const [openMenu, setOpenMenu] = useState(false)
     const [wonGame, setWonGame] = useState(false)
     const [re, setRe] = useState(new RegExp(userData.currentGame.gameKey, 'ig'))
